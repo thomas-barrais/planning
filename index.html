@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendrier septembre 2023 - février 2024</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #ccc;
+    }
+
+    .highlight {
+      background-color: #FFC0CB;
+    }
+
+    .saturday {
+      background-color: yellow;
+    }
+
+    .sunday {
+      background-color: orange;
+    }
+
+    .repetitions {
+      background-color: lightgreen;
+    }
+
+    .blue {
+      background-color: blue;
+      color: white;
+    }
+
+    .dark-blue {
+      background-color: #336699;
+      color: white;
+    }
+
+    .light-blue {
+      background-color: #4da6ff;
+      color: white;
+    }
+
+    .pink {
+      background-color: pink;
+      color: black;
+    }
+
+    .dance {
+      background-color: purple;
+      color: white;
+    }
+    .red {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calendrier septembre 2023 - février 2024</h1>
+
+  <h2>Décision du placement + style des danses dans les scenes en <span class="red">Août</span> après lecture scénario "finale"</h2>
+
+  <div class="legend">
+    Légende: <span style="background-color: lightgreen;">Répétitions</span>, <span style="background-color: pink;">Congés</span>.
+  </div>
+
+  <div id="calendar-container"></div>
+
+  <script>
+    function generateCalendar() {
+      // Date de début
+      var startDate = new Date('2023-09-01');
+    
+      // Date de fin
+      var endDate = new Date('2024-02-29');
+      var endDateRepetitions = new Date('2024-02-17'); // Date de fin pour les répétitions
+      
+      var calendarContainer = document.getElementById('calendar-container');
+      var calendarHTML = '';
+
+      while (startDate <= endDate) {
+        // Nouveau mois
+        if (startDate.getDate() === 1) {
+          // Vérifier si c'est le premier mois
+          if (startDate.getMonth() !== 8) {
+            calendarHTML += '</tbody></table><br>';
+          }
+
+          calendarHTML += '<h2>' + startDate.toLocaleString('default', { month: 'long' }) + ' ' + startDate.getFullYear() + '</h2>';
+          calendarHTML += '<table><thead><tr><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th></tr></thead><tbody><tr>';
+
+          // Ajouter des cellules vides pour décaler le début du mois
+          var dayOfWeek = startDate.getDay();
+          if (dayOfWeek === 0) {
+            dayOfWeek = 7; // Ajustement pour décaler vers la droite
+          }
+          for (var i = 1; i < dayOfWeek; i++) {
+            calendarHTML += '<td></td>';
+          }
+        }
+
+        // Ajouter la classe "highlight" aux cellules du 1er septembre au 11 septembre
+        var cellClass = '';
+        if (startDate.getDate() <= 11 && startDate.getMonth() === 8) {
+          cellClass = 'highlight';
+        }
+
+        // Ajouter la classe "saturday" aux cellules des samedis
+        if (startDate.getDay() === 6) {
+          cellClass += ' saturday';
+        }
+
+        // Ajouter la classe "sunday" aux cellules des dimanches
+        if (startDate.getDay() === 0) {
+          cellClass += ' sunday';
+        }
+
+        // Ajouter la classe "repetitions" aux cellules du lundi au vendredi à partir du lundi 13 novembre jusqu'au 16 février 2024
+        if (startDate.getDay() >= 1 && startDate.getDay() <= 5 && startDate >= new Date('2023-11-13') && startDate <= endDateRepetitions) {
+          cellClass += ' repetitions';
+        }
+
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 25 septembre au 29 septembre et du 2 au 4 octobre
+        if ((startDate.getDate() >= 25 && startDate.getDate() <= 29 && startDate.getMonth() === 8) || (startDate.getDate() >= 2 && startDate.getDate() <= 4 && startDate.getMonth() === 9)) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>ATELIERS</td>';
+        }
+        // Ajouter la classe "dark-blue" et le texte correspondant aux cellules du 5 octobre, 6 octobre et du 9 au 13 octobre
+        else if ((startDate.getDate() === 5 || startDate.getDate() === 6 || (startDate.getDate() >= 9 && startDate.getDate() <= 13)) && startDate.getMonth() === 9) {
+          cellClass += ' dark-blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>AUDITIONS</td>';
+        }
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 13 septembre
+        else if (startDate.getDate() === 13 && startDate.getMonth() === 8) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>COSI</td>';
+        }
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 15 septembre
+        else if (startDate.getDate() === 15 && startDate.getMonth() === 8) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Garden</td>';
+        }
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 12 septembre
+        else if (startDate.getDate() === 12 && startDate.getMonth() === 8) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Rentrée 1A</td>';
+        }
+        // Ajouter la classe "pink" et le texte correspondant aux cellules du 22, 23 et 24 septembre
+        else if ((startDate.getDate() === 22 || startDate.getDate() === 23 || startDate.getDate() === 24) && startDate.getMonth() === 8) {
+          cellClass += ' pink';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Week-end BLOC</td>';
+        }
+        // Ajouter la classe "pink" et le texte correspondant aux cellules du 9, 10 et 11 septembre
+        else if ((startDate.getDate() === 9 || startDate.getDate() === 10 || startDate.getDate() === 11) && startDate.getMonth() === 8) {
+          cellClass += ' pink';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet COSI</td>';
+        }
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 18, 19, 20 et 21 septembre
+        else if ((startDate.getDate() >= 16 && startDate.getDate() <= 21) && startDate.getMonth() === 8) {
+          cellClass += ' light-blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet Ateliers</td>';
+        }
+        // Ajouter la classe "dance" et le texte correspondant aux cellules du 16 au 20 octobre
+        else if (startDate.getDate() >= 16 && startDate.getDate() <= 20 && startDate.getMonth() === 9) {
+          cellClass += ' dance';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet scène de danse</td>';
+        }
+        // Ajouter la classe "dance" et le texte correspondant aux cellules du 23 au 27 octobre
+        else if (startDate.getDate() >= 23 && startDate.getDate() <= 27 && startDate.getMonth() === 9) {
+          cellClass += ' dance';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet scène de danse</td>';
+        }
+        // Ajouter la classe "dance" et le texte correspondant aux cellules du 30 septembre au 3 octobre
+        else if (startDate.getDate() >= 30 && startDate.getMonth() === 9 || startDate.getDate() <= 3 && startDate.getMonth() === 10) {
+          cellClass += ' dance';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet scène de danse</td>';
+        }
+        // Ajouter la classe "blue" et le texte correspondant aux cellules du 13 novembre
+        else if (startDate.getDate() === 13 && startDate.getMonth() === 10) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Début Repet</td>';
+        }
+        else if (startDate.getDate() === 15 && startDate.getMonth() === 0) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Ajout des AC/Choeurs <span class="red">AVANT CONGES</span></td>';
+        }
+        else if (startDate.getDate() === 12 && startDate.getMonth() === 0) {
+          cellClass += ' blue';
+          calendarHTML += '<td class="red' + cellClass + '">' + startDate.getDate() + '<br>Deadline apprentissage chorés danseurs (26 max pour ceux avec beaucoup de scenes)</td>';
+        }
+        else if (startDate.getDate() === 6 && startDate.getMonth() === 10) {
+          calendarHTML += '<td class="red">' + startDate.getDate() + '<br>Selon date congés</td>';
+        }
+        else if (startDate.getDate() === 21 && startDate.getMonth() === 9) {
+          calendarHTML += '<td class="red saturday">' + startDate.getDate() + '<br>Repartition danseur + début chorégraphie</td>';
+        }
+        else if (startDate.getDate() === 1 && startDate.getMonth() === 0) {
+          calendarHTML += '<td class="red repetitions">' + startDate.getDate() + "<br>Chorés terminées dans l'ensemble</td>";
+        }
+        // Ajouter la classe "light-blue" et le texte correspondant aux cellules à partir du 16 décembre, tous les samedis
+        else if (startDate.getDay() === 6 && startDate >= new Date('2023-12-16') && startDate <= new Date('2024-02-19')) {
+          cellClass += ' light-blue';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Fillage + Repet</td>';
+        }
+        // Ajouter la classe "dance" et le texte correspondant aux cellules à partir du 16 décembre, tous les dimanches
+        else if (startDate.getDay() === 0 && startDate >= new Date('2023-12-16') && startDate <= new Date('2024-02-19')) {
+          cellClass += ' dance';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Repet danse</td>';
+        }
+        else if (startDate.getDate() >= 19 && startDate.getDate() <= 23 && startDate.getMonth() === 1) {
+          cellClass += ' dance';
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '<br>Spectacle ouuuuuu</td>';
+        }
+        else {
+          calendarHTML += '<td class="' + cellClass + '">' + startDate.getDate() + '</td>';
+        }
+
+        // Passage au jour suivant
+        startDate.setDate(startDate.getDate() + 1);
+
+        // Nouvelle semaine
+        if (startDate.getDay() === 1) {
+          calendarHTML += '</tr><tr>';
+        }
+      }
+
+      calendarHTML += '</tr></tbody></table>';
+
+      calendarContainer.innerHTML = calendarHTML;
+    }
+
+    generateCalendar();
+  </script>
+</body>
+</html>
